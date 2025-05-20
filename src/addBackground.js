@@ -12,11 +12,14 @@ let isGameOngoing = true;
 
 export function addBackground(app) {
   const texture = Texture.from("background");
+  // Tilingsprite for a continuous effect
   background = new TilingSprite({
     texture,
     width: app.screen.width * 2,
     height: app.screen.height,
   });
+  // Automatically set the tilescale so it is the
+  // appropriate size (original image is 360 PX)
   background.tileScale.set(app.screen.height / 360);
   app.stage.addChild(background);
 }

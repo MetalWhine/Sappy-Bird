@@ -9,9 +9,9 @@
 2.1. Make pipes appear [DONE]
 2.2. Make pipes move from right to left (simulate movement) [DONE]
 2.3. Make pipes appear continuously and despawn on the left (randomly move pipes up and down, but in a certain allowed range) [DONE]
-2.4. Make pipes randomly placed with consistent spacing [KIND OF DONE]
+2.4. Make pipes randomly placed with consistent spacing [DONE]
 2.5. Make pipes be able to collide with player and kill them [DONE]
-3. Game polish
+3. Game polish [DONE]
 3.1. Make it so that player dies and is able to restart the level by pressing mouseclick [DONE]
 3.2. Make a simple score system [DONE]
 3.3. Game UI & Graphics [DONE]

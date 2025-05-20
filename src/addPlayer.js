@@ -1,6 +1,6 @@
 import { Sprite } from "pixi.js";
 import { Howl } from "howler";
-import { gameOver, gameStart, resetGame } from "./addPipes";
+import { stopPipes, startPipes, resetGame } from "./addPipes";
 import { startBackground, stopBackground } from "./addBackground";
 import { resetScore } from "./addScoreText";
 
@@ -67,22 +67,25 @@ export function updatePlayer(app, time) {
 
 // Input handler
 export function HandleInput(app) {
+  // Only accepts inputs if not dead
   if (!isDead) {
+    // One time use for when bird is idling after respawn
     if (!isGameOngoing) {
       isGameOngoing = true;
-      gameStart(app);
-      console.log("Game Started");
+      startPipes();
     }
     flap();
   }
+  // Waits until bird touched ground after dying
+  // Before allowing to continue
   if (isDead && hasTouchedGround) {
-    console.log("Game Resetted");
     resetplayer(app);
     resetScore();
     resetGame(app);
   }
 }
 
+// Basic movement
 function flap() {
   if (player.currentSpeed > 0) {
     player.currentSpeed = 0;
@@ -91,9 +94,9 @@ function flap() {
   player.currentSpeed = Math.max(player.currentSpeed, -maxFlapStrength);
   player.angle = -lookUpAngle;
   jumpSFX.play();
-  console.log("Sucessful Flap");
 }
 
+// Checks for both pipe's collision boxes
 export function detectPipeCollision(pipe1, pipe2) {
   if (!isDead) {
     if (rectsIntersect(player, pipe1) || rectsIntersect(player, pipe2)) {
@@ -103,10 +106,12 @@ export function detectPipeCollision(pipe1, pipe2) {
   }
 }
 
+// Collision handler
 function rectsIntersect(object1, object2) {
   const bounds1 = object1.getBounds();
   const bounds2 = object2.getBounds();
 
+  // Checks collisions by checking the positions of both bounding boxes
   return (
     bounds1.x + bounds1.width > bounds2.x &&
     bounds1.x < bounds2.x + bounds2.width &&
@@ -115,6 +120,7 @@ function rectsIntersect(object1, object2) {
   );
 }
 
+// Function that handles falling into the ground
 function detectGround(app) {
   if (player.y >= app.screen.height) {
     player.y = app.screen.height;
@@ -130,9 +136,10 @@ function playerDies() {
   isDead = true;
   isGameOngoing = false;
   stopBackground();
-  gameOver();
+  stopPipes();
 }
 
+// Applies gravity acceleration & animation
 function applyGravity() {
   player.currentSpeed += gravity;
   player.angle += lookDownSpeed;
@@ -140,6 +147,7 @@ function applyGravity() {
   player.currentSpeed = Math.min(terminalVelocity, player.currentSpeed);
 }
 
+// More cleanly reset player
 function resetplayer(app) {
   player.y = app.screen.height / 2;
   player.currentSpeed = 0;
