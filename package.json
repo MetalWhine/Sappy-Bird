@@ -6,10 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Game",
+    "Small Project",
+    "Flappy Bird"
+  ],
+  "author": "Nathanael Setiawan",
   "license": "ISC",
   "dependencies": {
+    "howler": "^2.2.4",
     "pixi.js": "^8.9.2"
   },
   "devDependencies": {
